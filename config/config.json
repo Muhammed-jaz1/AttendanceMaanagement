@@ -11,6 +11,12 @@
         "server": {
             "host": "localhost",
             "port": "5001"
+        },
+        "mailer": {
+            "port": 587,
+            "host": "smtp.gmail.com",
+            "user": "jazap123@gmail.com",
+            "password": "12455421"
         }
     }
 }

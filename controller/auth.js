@@ -7,8 +7,8 @@ const env = process.env.NODE_ENV || 'local';
 const c = require('../config/config.json')[env];
 const crypto = require("crypto");
 const fs = require("fs");
-const User = db.user;
-var request = require('request');
+const nodemailer= require('nodemailer');
+const user = require("./user");
 const serviceSID="VAf86cb5cf2481f482e414e47de266ec3a"
 const accountSID="AC6cea6ac067856e8c4ba9c4a2bf7e9284"
 const authToken="dcf6f9199e89748f2ecde77880c5b584"
@@ -20,6 +20,14 @@ const adminCred = {
   password: "SuperAdmin",
   mobile:"9999999999"
 };
+const transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 587,
+  auth: {
+      user: 'jaz@spericorn.com',
+      pass: '***********'
+  }
+});
 
 
 module.exports = {
@@ -35,11 +43,26 @@ module.exports = {
         role: 2
       };
       const result = await db.user.create(users);
-      return res.status(200).json({
-        success: true,
-        message: "user created Successfully",
-        data: { result }
-      })
+      if(!result){
+        res.status(200).json({
+          success:false,
+          message:"Something went wrong"
+        })
+      }else{
+
+        await transporter.sendMail({
+          from: 'jaz@spericorn.com',
+          to: users.email,
+          subject: 'Test Email Subject',
+          text: 'Welcome to Jazrivin'
+      });
+        return res.status(200).json({
+          success: true,
+          message: "user created Successfully",
+          data: { result }
+        })
+      }
+      
     } catch (error) {
       console.log(error);
       res.status(500).json({
