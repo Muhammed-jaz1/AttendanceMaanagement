@@ -4,7 +4,9 @@ const authController = require("../controller/auth");
 const userController = require('../controller/user')
 const { checkToken } = require('../middlewares/auth');
 
-
+router.get('/',(req,res)=>{
+  res.send("hii")
+})
 /**
  * @swagger
  *  /sign-up:
@@ -30,7 +32,11 @@ const { checkToken } = require('../middlewares/auth');
  *                          password:
  *                              type: string,
  *                              required: true,
- *                              example: "123456"                     
+ *                              example: "123456"
+ *                          mobile:
+ *                              type: string
+ *                              required: true,
+ *                              example: "test@mailinator.com"                     
  *                                         
  *          responses:
  *              200 :
@@ -294,5 +300,63 @@ router.get('/list-user',checkToken, userController.allUsers)
 *
 */
 router.put('/block-user/:id',checkToken, userController.blockUsers)
+/**
+ * @swagger
+ *  /callotp:
+ *      post:
+ *          tags:
+ *              -   Auth
+ *          description: otp sent
+ *          parameters:
+ *              -   in: body
+ *                  name : request body
+ *                  description: All fields are required.
+ *                  type: object
+ *                  schema:
+ *                      properties:
+ *                          mobile:
+ *                              type: string
+ *                              required: true,
+ *                              example: "9061415561"                     
+ *                                         
+ *          responses:
+ *              200 :
+ *                  description: otp sent successfully
+ *
+ *
+ */
+ 
+router.post('/callotp',authController.callOtp)
+/**
+ * @swagger
+ *  /verify-otp:
+ *      post:
+ *          tags:
+ *              -   Auth
+ *          description: Otp verification
+ *          parameters:
+ *              -   in: body
+ *                  name : request body
+ *                  description: All fields are required.
+ *                  type: object
+ *                  schema:
+ *                      properties:
+ *                          mobile:
+ *                              type: string
+ *                              required: true,
+ *                              example: "9061415561"
+ *                          code:
+ *                              type: string
+ *                              required: true,
+ *                              example: "123"                     
+ *                                                              
+ *                                         
+ *          responses:
+ *              200 :
+ *                  description: otp verified successfully
+ *
+ *
+ */
+router.post('/verify-otp',authController.otpVerify)
 
 module.exports = router;

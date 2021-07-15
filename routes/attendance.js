@@ -62,13 +62,29 @@ router.post('/markin',checkToken,leaveController.markIn)
 *              - Bearer: []
  *          tags:
  *              -   Entry Time
- *          description: Add entry time
+ *          description: Add exit time
  *          responses:
  *              200 :
- *                  description: added entry tme successfully 
+ *                  description: added exit time successfully 
  *
  *
  */
 
 router.put('/markout',checkToken,leaveController.markOut)
+/**
+ * @swagger
+ *  /attendance/attendance-status:
+ *      get:
+ *          security:
+*              - Bearer: []
+ *          tags:
+ *              -    attendance status
+ *          description: Add exit time
+ *          responses:
+ *              200 :
+ *                  description: attendace graph 
+ *
+ *
+ */
+ router.get('/attendance-status',checkToken, leaveController.attendanceStatus)
 module.exports = router;

@@ -1,0 +1,16 @@
+{
+    "local": {
+        "database": {
+            "HOST": "localhost",
+            "USER": "root",
+            "PASSWORD": "password",
+            "DB": "attendancedemo",
+            "dialect": "mysql"
+           
+        },
+        "server": {
+            "host": "localhost",
+            "port": "5001"
+        }
+    }
+}

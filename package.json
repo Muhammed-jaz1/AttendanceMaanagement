@@ -19,9 +19,11 @@
     "moment": "^2.29.1",
     "mysql2": "^2.2.5",
     "nodemon": "^2.0.9",
+    "request": "^2.88.2",
     "sequelize": "^6.6.4",
     "sequelize-cli": "^6.2.0",
     "swagger-jsdoc": "^6.1.0",
-    "swagger-ui-express": "^4.1.6"
+    "swagger-ui-express": "^4.1.6",
+    "twilio": "^3.65.0"
   }
 }

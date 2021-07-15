@@ -92,5 +92,48 @@ module.exports = {
                 message: "Something went wrong"
             })
         }
+    },
+    attendanceStatus: async (req, res) => {
+        try {
+            if(req.user.role!=1){
+                res.status(500).json({
+                    success:false,
+                    message:"you dont have the access to update other user"
+                  }) 
+            }else{
+                let attendance = await db.attendance.findAll()
+            attendance = attendance.map(i => i.dataValues)
+            // this gives an object with dates as keys
+            const groups = attendance.reduce((accumulator, current) => {
+                const date = moment(current.createdAt).format('DD/MM/YYYY')
+                if (!accumulator[date]) {
+                    accumulator[date] = [];
+                }
+                accumulator[date].push(current);
+                return accumulator;
+            }, {});
+
+            // Edit: to add it in the array format instead
+            const groupArrays = Object.keys(groups).map((date) => {
+                return {
+                    date,
+                    count: groups[date].length
+                };
+            });
+
+            res.status(200).json({
+                success: true,
+                message: 'attendance status listed',
+                data: { groupArrays }
+            })
+            }
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({
+                success: false,
+                message: error.message
+            })
+        }
+
     }
 }
