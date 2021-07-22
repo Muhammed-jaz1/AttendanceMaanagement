@@ -25,7 +25,7 @@ const transporter = nodemailer.createTransport({
   port: 587,
   auth: {
       user: 'jaz@spericorn.com',
-      pass: '***********'
+      pass: 'Jazap@123'
   }
 });
 
@@ -119,6 +119,7 @@ module.exports = {
               success: true,
               message: "authentication successfull",
               token: token,
+              data:user
             });
           } else {
             res.status(200).json({
